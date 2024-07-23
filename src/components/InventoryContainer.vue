@@ -5,13 +5,7 @@
 <template>
     <div class="inventory-container">
         <div class="inventory-container__inner">
-            <div class="left-card">
-
-            </div>
             <inventoryComponent class="inventory-component"/>
-            <div class="bottom-block">
-
-            </div>
         </div>
     </div>
 </template>
@@ -19,6 +13,7 @@
 <style scoped>
 
 .inventory-container{
+    margin-top: 80px;
     height: 800px;
 }
 

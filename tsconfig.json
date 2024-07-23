@@ -7,5 +7,6 @@
     {
       "path": "./tsconfig.node.json"
     }
-  ]
+  ],
+  "extends": "@vue/tsconfig/tsconfig.json"
 }

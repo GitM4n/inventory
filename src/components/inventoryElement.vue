@@ -1,38 +1,68 @@
 
 
 <script setup lang="ts">
-import {useDragEvents} from '../composables/useDragEvents';
 
-const props = defineProps<{
-    background:string
-}>()
+import { useDragAndDrop } from '../composables/useDragAndDrop';
+import {ref, onUnmounted} from 'vue'
 
-const {element, isDrag, onDrag, onDragStart, onDrop} = useDragEvents();
+const dragTimeout = ref<number | null>(null);
+
+const startDrag = (event: MouseEvent) => {
+    dragTimeout.value = window.setTimeout(() => {
+        dragStart(event);
+    }, 200);
+};
+
+const endDrag = () => {
+    clearDragTimeout();
+    dragEnd();
+};
+
+
+const clearDragTimeout = () => {
+    if (dragTimeout.value !== null) {
+        clearTimeout(dragTimeout.value);
+        dragTimeout.value = null;
+    }
+}
+
+
+const {dragStart, drag, dragEnd} = useDragAndDrop()
+
+
+onUnmounted(() => {
+    clearDragTimeout()
+});
+
+
 </script>
 
 <template>
-    <div class="invetory-element"
-        draggable="true"
-        @drag="onDrag"
-        @dragstart="onDragStart"
-        ref="element"
+    <div class="inventory-element drag-element"
+       @mousedown="startDrag"
+       @mouseup="endDrag"
+       @dragstart.prevent
         >
-        <div class="circle" 
-        :style="{backgroundColor:props.background}"
-     ></div>
+        <slot></slot>
     </div>
 </template>
 
 <style scoped>
 
-.circle{
-    position: relative;
-    width: 50%;
-    height: 50%;
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%)
+.drag-element{
+    cursor: pointer;
+    user-select: none;
+}
+
+.isDragging{
+    opacity: 0.8;
+    position: absolute;
+    background: var(--background);
+    border: 2px solid var(--color);
+    border-radius: 10px;
+    z-index: 1000;
+    cursor: move;
+ 
 }
 
 </style>

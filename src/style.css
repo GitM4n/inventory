@@ -2,6 +2,7 @@
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
+    --red: #fc3c3c;
     --light: #ebebeb;
     --gray: rgb(131, 131, 131);
     --ligth-dark: #2c2c2c;
@@ -12,6 +13,7 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  
 }
 
 * {
