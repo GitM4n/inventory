@@ -1,5 +1,5 @@
 // useDragAndDrop.ts
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, computed, watch, onMounted } from 'vue';
 
 
 export interface Item {
@@ -44,10 +44,18 @@ const ids = computed(()=>{
 const nextIdx = computed(()=> ids.value.length > 0 ? Math.max(...ids.value) + 1 : 0)
 
 
-
-
-
 const cells = reactive<Cell[]>(Array.from({ length: 25 }, () => ({ item: null })));
+
+
+watch(cells, () => {
+    localStorage.setItem('cells', JSON.stringify(cells));
+})
+
+
+onMounted(()=>{
+  
+})
+
    
 
 export const useDragAndDrop = () => {

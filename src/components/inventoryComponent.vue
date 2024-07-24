@@ -53,7 +53,18 @@ const hideAddComponent = () => {
 }
 
 
-onMounted(() => document.addEventListener('click', hideDetails ))
+onMounted(() =>  {
+    const savedCells = localStorage.getItem('cells');
+      if (savedCells) {
+        const parsedCells = JSON.parse(savedCells);
+        for (let i = 0; i < cells.length; i++) {
+          if (parsedCells[i]) {
+            cells[i].item = parsedCells[i].item;
+          }
+        }
+    }
+    document.addEventListener('click', hideDetails)
+})
 onUnmounted(() => document.removeEventListener('click', hideDetails ))
 
 </script>
