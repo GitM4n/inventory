@@ -106,9 +106,9 @@ onUnmounted(() => document.removeEventListener('click', hideDetails ))
         <Button class="danger" @click="clearCells(); statusNotfAnimate('Ячейки очищены', 'failed')">Очистить ячейки</Button>
         <div class="status-notifications">
             <transition-group name="fade-status">
-                <template class="status" v-for="notification, idx in statusNotificationsArr" :key="idx">
+                <div class="status" v-for="notification, idx in statusNotificationsArr" :key="idx">
                   <StatusNotification :text="notification.text" :status="notification.status" />
-                </template>
+                </div>
             </transition-group>
         </div>
         

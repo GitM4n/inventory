@@ -27,7 +27,7 @@ const clearDragTimeout = () => {
 }
 
 
-const {dragStart, drag, dragEnd} = useDragAndDrop()
+const {dragStart, dragEnd} = useDragAndDrop()
 
 
 onUnmounted(() => {
