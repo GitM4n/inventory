@@ -2,7 +2,7 @@
 import { ref, reactive, computed } from 'vue';
 
 
-interface Item {
+export interface Item {
     id:number,
     quantity:number,
     img?:string,
@@ -10,7 +10,7 @@ interface Item {
 }
 
 
-interface Cell {
+export interface Cell {
     item: Item | null;
 }
 
@@ -35,6 +35,13 @@ const colorArray = [
 const randomColor = () =>{
     return colorArray[Math.floor(Math.random() * colorArray.length)]
 }  
+
+
+
+const ids = computed(()=>{
+    return  cells.filter(cell => cell.item !== null).map(cell => cell.item?.id || 0)  
+}) 
+const nextIdx = computed(()=> ids.value.length > 0 ? Math.max(...ids.value) + 1 : 0)
 
 
 
@@ -161,19 +168,18 @@ export const useDragAndDrop = () => {
     };
 
 
-    const addItem = (item: Omit<Item, 'id'>) => {
+    const addItem = (item:Item) => {
         const freeCellIdx = cells.findIndex(cell => !cell.item)
         
-        const ids = cells.filter(cell => cell.item !== null).map(cell => cell.item?.id || 0)   
-        const nextIdx = Math.max(...ids) + 1
-        if(ids.length === 0){
-            cells[freeCellIdx].item = { id:0 , ...item, color: randomColor() };
+       
+        if(ids.value.length === 0){
+            cells[freeCellIdx].item = item;
             return
         }
      
 
-        if (freeCellIdx !== -1 && ids.length > 0) {
-            cells[freeCellIdx].item = { id:nextIdx , ...item, color: randomColor() };
+        if (freeCellIdx !== -1 && ids.value.length > 0) {
+            cells[freeCellIdx].item = item;
         };
         
     }
@@ -183,7 +189,7 @@ export const useDragAndDrop = () => {
         if(!cells[id].item) return
 
         cells[id].item = null
-        alert('Item deleted')
+   
     }
 
 
@@ -206,8 +212,14 @@ export const useDragAndDrop = () => {
     }
 
 
+    const clearCells = () => {
+        cells.forEach(cell => cell.item = null)
+    }
+
+
 
     return {
+        clearCells,
         cells,
         dragStart,
         addRandomCell,
@@ -215,6 +227,8 @@ export const useDragAndDrop = () => {
         dragEnd,
         addItem,
         deleteItem,
+        randomColor,
+        nextIdx
 
     }
 }
