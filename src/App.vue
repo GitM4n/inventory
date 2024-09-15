@@ -1,31 +1,27 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import InventoryContainer from './components/InventoryContainer.vue';
+import { onMounted, ref } from "vue";
+import InventoryContainer from "./components/InventoryContainer.vue";
 
+const isMobie = ref(false);
 
-const isMobie = ref(false)
-
-onMounted(()=>{
-  if(window.innerWidth < 1200){
-    isMobie.value = true
+onMounted(() => {
+  if (window.innerWidth < 1200) {
+    isMobie.value = true;
   }
-})
+});
 </script>
 
 <template>
-
   <div class="container">
     <div class="not-working" v-if="isMobie">
       <h1>Не работает на мобильных устройствах</h1>
     </div>
     <InventoryContainer />
   </div>
-
 </template>
 
 <style scoped>
-
-.not-working{
+.not-working {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,5 +36,4 @@ onMounted(()=>{
   background: var(--dark);
   z-index: 10000;
 }
-
 </style>
